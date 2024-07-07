@@ -42,4 +42,29 @@ class ShopRepositoryTest {
             repo.removeById(10);
         });
     }
+
+    @Test
+    public void addANewProduct() {
+        ShopRepository repo = new ShopRepository();
+
+        repo.add(strings);
+        repo.add(keyboard);
+        repo.add(woodwind);
+
+        Product[] expected = {strings, keyboard, woodwind};
+        Assertions.assertArrayEquals(expected, repo.findAll());
+    }
+
+    @Test
+    public void addAnExistingProduct() {
+        ShopRepository repo = new ShopRepository();
+
+        repo.add(strings);
+        repo.add(keyboard);
+        repo.add(woodwind);
+
+        Assertions.assertThrows(AlreadyExistsException.class, () -> {
+            repo.add(strings);
+        });
+    }
 }
